@@ -5,7 +5,11 @@ const props = defineProps({
     type: String,
     required: true
   },
-  alt: String
+  top: String,
+  left: String,
+  right: String,
+  bottom: String,
+  alt: String,
 })
 
 
@@ -28,8 +32,18 @@ function getImageUrl() {
 
 </script>
 
+<style scoped>
+.image {
+  position: absolute;
+  top: v-bind(top);
+  bottom: v-bind(bottom);
+  left: v-bind(left);
+  right: v-bind(right);
+}
+</style>
+
 <template>
   <div>
-    <img :src="getImageUrl()" :alt="getAlt()">
+    <img class="image" :src="getImageUrl()" :alt="getAlt()">
   </div>
 </template>
