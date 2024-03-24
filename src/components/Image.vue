@@ -9,8 +9,13 @@ const props = defineProps({
   left: String,
   right: String,
   bottom: String,
+  width: String,
+  height: String,
+  position: String,
   alt: String,
 })
+
+const position = props.position ? props.position : "relative"
 
 
 function getAlt(){
@@ -22,28 +27,21 @@ function getAlt(){
   return props.alt
 }
 
-function getImageUrl() {
-  try {
-    return new URL(`../assets/${props.filename}`, import.meta.url).toString()
-  } catch (e) {
-    console.log((e as Error).message);
-  }
-}
-
 </script>
 
 <style scoped>
 .image {
-  position: absolute;
+  position: v-bind(position);
   top: v-bind(top);
   bottom: v-bind(bottom);
   left: v-bind(left);
   right: v-bind(right);
+
+  width: v-bind(width);
+  height: v-bind(height);
 }
 </style>
 
 <template>
-  <div>
-    <img class="image" :src="getImageUrl()" :alt="getAlt()">
-  </div>
+  <img class="image" :src="props.filename" :alt="getAlt()">
 </template>

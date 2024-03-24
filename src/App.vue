@@ -12,19 +12,42 @@ onclick = (event) => {
   <main id="main">
     <star-fall></star-fall>
     <div class="overlay">
-      <div class="text">
-        <img src="./assets/julianlogo.gif" class="logo" alt="julian awesome website logo"/>
+
+      <div id="topText">
+        <img src="./assets/julian-stuff/julianlogo.gif" class="logo" alt="julian awesome website logo"/>
         <h2>omg hello welcome to julian awesome epic website!!!!</h2>
 
         <p>hello dear visitor! this is an early version of my website!
           I plan on adding a lot more so you can fully immerse yourself in the julian experience!</p>
 
-      </div>
-      <Image filename="butterflies.gif" top="180px" left="180px"></Image>
-      <Image filename="flying-saucer.gif" top="170px" left="1270px"></Image>
-      <Image filename="gnome-toilet.gif" top="445px" left="100px"></Image>
-      <Image filename="fish-graphic.gif" top="380px" left="1310px"></Image>
+        <div id="imageColumnLeft">
+          <Image filename="./src/assets/butterflies.gif"></Image>
+          <Image filename="./src/assets/gnome-toilet.gif" top="100px"></Image>
+        </div>
 
+        <div id="imageColumnRight">
+          <Image filename="./src/assets/flying-saucer.gif"></Image>
+          <Image filename="src/assets/fish-graphic.gif" top="280px"></Image>
+        </div>
+
+        <div id="julianPics">
+          <Image filename="./src/assets/julian-stuff/julianfairy.png" left="10px" width="10%" position="absolute"></Image>
+          <Image filename="./src/assets/julian-stuff/julianpants.png" top="100px" left="275px" width="10%" position="absolute"></Image>
+          <Image filename="./src/assets/julian-stuff/le epic face.png" top="100px" right="325px" width="20%" position="absolute"></Image>
+          <Image filename="./src/assets/julian-stuff/julianmatrix.png" top="0" right="25px" width="25%" position="absolute"></Image>
+          <Image filename="./src/assets/julian-stuff/julianface.png" top="300px" left="25px" width="20%" position="absolute"></Image>
+          <Image filename="./src/assets/julian-stuff/juliancamera.png" top="325px" left="400px" width="15%" position="absolute"></Image>
+        </div>
+
+      </div>
+
+      <div id="introText">
+        <h2 style="display: inline-block">hello i am
+
+          <Image filename="./src/assets/julian-stuff/julian shuster.gif" width="25%"></Image>
+        </h2>
+
+      </div>
 
     </div>
 
@@ -40,27 +63,56 @@ onclick = (event) => {
   transition: filter 300ms;
 }
 
+.logo:hover {
+  filter: drop-shadow(0 0 2em #89DD36);
+}
+
+
 .overlay {
   position: absolute;
-  border-radius: 25px;
-  background: rgba(0,0,0,.75);;
-  width: 100%;
-  height: 100%;
+  background: rgba(0,0,0,.75);
+  width: 100vw;
+  height: 100vh;
   top: 50%;
   left: 50%;
-  padding: 20px;
   transform: translate(-50%, -50%);
 }
 
-.text {
-  left: 300px;
-  right: 300px;
-  margin-left: 300px;
-  margin-right: 300px;
+
+#topText, #introText {
+  position: relative;
+  display: block;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #89DD36);
+#julianPics {
+  position: absolute;
+  display: block;
+  padding: 20px;
+  margin: auto;
+  height: 700px;
+  overflow: hidden;
+  width: 100%;
+}
+
+#imageColumnLeft {
+  position: relative;
+  width: fit-content;
+  float: left;
+  left: -50%;
+}
+
+#imageColumnRight {
+  position: relative;
+  width: fit-content;
+  float: right;
+  left: 50%;
+}
+
+#introText {
+  position: relative;
 }
 
 p {
