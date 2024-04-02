@@ -15,7 +15,6 @@ const baseRotation = 0.5
 const starArr: Star[] = []
 
 class Star {
-  element: HTMLElement
   point: paper.Point
   path: paper.Path
 
@@ -27,12 +26,10 @@ class Star {
   moveSpeed = this.sizeRatio * baseSpeed
   rotSpeed = this.sizeRatio * baseRotation
 
-  constructor(element: HTMLElement) {
-    this.element = element
-
+  constructor() {
     this.point = new paper.Point({
-      x: random(0, this.element.offsetWidth),
-      y: random(0, this.element.offsetHeight / 2)
+      x: random(0, paper.view.viewSize.width),
+      y: random(0, paper.view.viewSize.height * 0.75)
     })
 
     this.path = new paper.Path.Star(this.point, 5, this.radius1, this.radius2)
@@ -46,7 +43,7 @@ class Star {
     if (this.path.fillColor!.alpha < 1)
       this.path.fillColor!.alpha += 0.01
 
-    if (this.path.position.y < this.element.offsetHeight + this.radius2) {
+    if (this.path.position.y < paper.view.size.height + this.radius2) {
       this.path.rotate(this.rotSpeed)
       this.path.position.y += this.moveSpeed
     } else {
@@ -59,26 +56,22 @@ class Star {
 
   regen() {
     if (!this.done)
-      starArr.push(new Star(this.element))
+      starArr.push(new Star())
 
     this.done = true
   }
 
 }
 
-const appDiv = document.getElementById("app")
-const canvas = document.createElement("canvas") as HTMLCanvasElement
-appDiv?.appendChild(canvas)
+const canvas =  document.getElementById("canvas") as HTMLCanvasElement
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+let overlay: HTMLDivElement | undefined
 
 paper.setup(canvas)
-
 const numWanted = 75
 
 for (let i = 0; i < numWanted; i++) {
-  const star = new Star(canvas)
+  const star = new Star()
   starArr.push(star)
 }
 
@@ -96,16 +89,23 @@ paper.view.onResize = function () {
 </script>
 
 <style scoped>
-canvas[onresize] {
-  margin: 0px;
-  padding: 0px;
-  display: block;
+
+#canvas[onresize] {
+  width: inherit;
+  height: inherit;
+  z-index: -50;
+
   position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
 </style>
 
 <template>
+  <canvas id="canvas"></canvas>
+
+
 </template>
