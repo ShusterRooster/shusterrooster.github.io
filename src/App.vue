@@ -2,22 +2,47 @@
 import StarFall from "./components/starFall.vue";
 import Image from "./components/Image.vue";
 import ImageGrid from "./components/ImageGrid.vue";
+import {computed, onMounted, Ref, ref} from "vue";
 
 onclick = (event) => {
   console.log(`${event.clientX}, ${event.clientY}`)
 };
 
+const overlay = ref<HTMLDivElement>()
+
+onMounted(() => {
+  console.log(overlay.value)
+  console.log(computedWidth)
+  console.log(computedHeight)
+
+})
+
+const computedWidth = computed(() => {
+  // return overlay.value ? overlay.value.clientWidth + 'px' : window.innerWidth
+  return window.innerWidth
+});
+
+const computedHeight = computed(() => {
+  // return overlay.value ? overlay.value?.offsetHeight + 'px' : window.innerHeight
+  return window.innerHeight
+});
+
 const imageGridArr = ['juliancamera.png', 'julianfairy.png', 'julianpants.png',
   'le epic face.png', 'julianmatrix.png', 'julianface.png']
+
+const julianSrc = './src/assets/julian-stuff/'
+const assets = './src/assets/'
 
 </script>
 
 <template>
-  <div class="overlay">
+  <div class="overlay" ref="overlay">
 
     <div id="imageColumnLeft">
-      <Image filename="./src/assets/butterflies.gif"></Image>
-      <Image filename="./src/assets/gnome-toilet.gif"></Image>
+      <Image :dir=assets filename="butterflies.gif"></Image>
+      <Image :dir=assets filename="gnome-toilet.gif"></Image>
+      <Image :dir=assets filename="apple.gif"></Image>
+      <Image :dir=assets filename="sharkie.gif"></Image>
     </div>
 
     <div id="centerContent">
@@ -28,35 +53,37 @@ const imageGridArr = ['juliancamera.png', 'julianfairy.png', 'julianpants.png',
         I plan on adding a lot more so you can fully immerse yourself in the julian experience!</p>
 
 
-      <ImageGrid dir="./src/assets/julian-stuff/" :images=imageGridArr>
-        <!--        <Image filename="./src/assets/julian-stuff/juliancamera.png" width="15%"></Image>-->
-        <!--        <Image filename="./src/assets/julian-stuff/julianfairy.png" width="10%"></Image>-->
-        <!--        <Image filename="./src/assets/julian-stuff/julianpants.png" width="10%"></Image>-->
-        <!--        <Image filename="./src/assets/julian-stuff/le epic face.png" width="20%"></Image>-->
-        <!--        <Image filename="./src/assets/julian-stuff/julianmatrix.png" width="25%"></Image>-->
-        <!--        <Image filename="./src/assets/julian-stuff/julianface.png" width="20%"></Image>-->
+      <!--      <ImageGrid dir="./src/assets/julian-stuff/" :images=imageGridArr>-->
+      <!--        -->
 
-      </ImageGrid>
+      <!--      </ImageGrid>-->
 
-      <!--      <div id="introText">-->
-      <!--        <h2 style="display: inline-block">hello i am-->
+      <div id="julianPics">
+        <Image id="matrix" :dir=julianSrc filename="julianmatrix.png"></Image>
+        <Image id="pants" :dir=julianSrc filename="julianpants.png"></Image>
+        <Image id="fairy" :dir=julianSrc filename="julianfairy.png"></Image>
+        <Image id="epic" :dir=julianSrc filename="le epic face.png"></Image>
+        <Image id="camera" :dir=julianSrc filename="juliancamera.png"></Image>
+<!--        <Image id="face" :dir=julianSrc filename="julianface.png"></Image>-->
+      </div>
 
-      <!--          <Image filename="./src/assets/julian-stuff/julian shuster.gif" width="25%"></Image>-->
-      <!--        </h2>-->
+      <div id="introText">
+        <h2 style="display: inline-block">hello i am
 
-      <!--      </div>-->
+          <Image :dir=julianSrc filename="julian shuster.gif" width="25%"></Image>
+        </h2>
 
-
-
-      <!--    <star-fall></star-fall>-->
-
+      </div>
     </div>
     <div id="imageColumnRight">
-      <Image filename="./src/assets/flying-saucer.gif"></Image>
-      <Image filename="src/assets/fish-graphic.gif"></Image>
+      <Image :dir=assets filename="flying-saucer.gif"></Image>
+      <Image :dir=assets filename="fish-graphic.gif"></Image>
+      <Image :dir=assets filename="lightbulb.gif"></Image>
+      <Image :dir=assets filename="cactus.gif"></Image>
     </div>
-  </div>
 
+    <StarFall :style="{ width: computedWidth, height: computedHeight }"></StarFall>
+  </div>
 </template>
 
 <style scoped>
@@ -74,7 +101,10 @@ const imageGridArr = ['juliancamera.png', 'julianfairy.png', 'julianpants.png',
 }
 
 .overlay {
-  flex: 0 0 auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-gap: 10px;
@@ -82,6 +112,46 @@ const imageGridArr = ['juliancamera.png', 'julianfairy.png', 'julianpants.png',
   background: rgba(0, 0, 0, .75);
   width: 100vw;
   height: 100%;
+}
+
+#julianPics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 0.5fr);
+  grid-auto-flow: row dense;
+  height: fit-content;
+  max-width: 1200px;
+  justify-items: center;
+  padding: 20px;
+}
+
+#julianPics img {
+  max-width: 75%; /* Ensures images fill their containers */
+  height: auto;
+}
+
+#fairy {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+#epic {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+#face {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+#camera {
+  grid-area: 2 / 2 / 4 / 3;
+}
+
+#matrix {
+  grid-area: 1 / 3 / 4 / span 5;
+}
+
+#pants {
+  grid-area: 2 / 1 / 4 / 2;
 }
 
 #centerContent {

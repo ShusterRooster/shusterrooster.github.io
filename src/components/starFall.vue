@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import paper from "paper";
+import {computed, ref} from "vue";
 
 function random(min: number, max: number) {
   return Math.random() * (max - min) + min;
@@ -9,8 +10,8 @@ function random(min: number, max: number) {
 const minRadius = 15
 const maxRadius = 50
 const maxSize = maxRadius ** 2
-const baseSpeed = 2
-const baseRotation = 0.5
+const baseSpeed = 3.5
+const baseRotation = 0.75
 
 const starArr: Star[] = []
 
@@ -60,52 +61,59 @@ class Star {
 
     this.done = true
   }
-
 }
 
-const canvas =  document.getElementById("canvas") as HTMLCanvasElement
-
-let overlay: HTMLDivElement | undefined
-
-paper.setup(canvas)
-const numWanted = 75
-
-for (let i = 0; i < numWanted; i++) {
-  const star = new Star()
-  starArr.push(star)
+function initStars(wanted: number) {
+  for (let i = 0; i < wanted; i++) {
+    const star = new Star()
+    starArr.push(star)
+  }
 }
 
-paper.view.onFrame = function () {
+function runStars() {
   for (const star of starArr) {
     star.fall()
   }
 }
 
-paper.view.onResize = function () {
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
+const canvas = ref<HTMLCanvasElement>()
+
+console.log(canvas)
+
+if(canvas.value !== undefined){
+  paper.setup(canvas.value)
+  console.log(paper)
+  initStars(75)
 }
+
+if(paper.view){
+  paper.view.onFrame = function () {
+    runStars()
+  }
+}
+
+// paper.view.onResize = function () {
+//   canvas!.width = window.innerWidth
+//   canvas!.height = window.innerHeight
+// }
 
 </script>
 
 <style scoped>
 
-#canvas[onresize] {
-  width: inherit;
-  height: inherit;
+#canvas {
   z-index: -50;
-
   position: absolute;
-  display: block;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 </style>
 
 <template>
-  <canvas id="canvas"></canvas>
-
-
+    <canvas id="canvas" ref="canvas"></canvas>
 </template>
