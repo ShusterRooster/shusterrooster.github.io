@@ -1,7 +1,11 @@
 <script setup lang="ts">
 
 import paper from "paper";
-import {computed, ref} from "vue";
+import {ref} from "vue";
+
+defineProps<{
+  backgroundColor?: String
+}>()
 
 function random(min: number, max: number) {
   return Math.random() * (max - min) + min;
@@ -76,17 +80,31 @@ function runStars() {
   }
 }
 
-const canvas = ref<HTMLCanvasElement>()
+let canvas = ref<HTMLCanvasElement>()
+const container = ref<HTMLDivElement>()
 
-console.log(canvas)
+window.addEventListener("load", () => {
+  console.log(container.value)
+  console.log(canvas.value)
 
-if(canvas.value !== undefined){
-  paper.setup(canvas.value)
-  console.log(paper)
-  initStars(75)
-}
+  if(canvas.value !== undefined){
+    paper.setup(canvas.value)
 
-if(paper.view){
+    paper.view.viewSize = new paper.Size(container.value!.clientWidth, container.value!.clientHeight)
+
+    console.log(paper)
+    initStars(75)
+
+    afterMount()
+  }
+})
+
+// onUpdated(() => {
+//
+//
+// })
+
+function afterMount(){
   paper.view.onFrame = function () {
     runStars()
   }
@@ -102,18 +120,16 @@ if(paper.view){
 <style scoped>
 
 #canvas {
-  z-index: -50;
+  z-index: -1;
   position: absolute;
-  display: flex;
-
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  background-color: v-bind(backgroundColor);
 }
 
 </style>
 
 <template>
+  <div id="container" ref="container">
     <canvas id="canvas" ref="canvas"></canvas>
+    <slot></slot>
+  </div>
 </template>

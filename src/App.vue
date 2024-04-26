@@ -1,34 +1,10 @@
 <script setup lang="ts">
 import StarFall from "./components/starFall.vue";
 import Image from "./components/Image.vue";
-import ImageGrid from "./components/ImageGrid.vue";
-import {computed, onMounted, Ref, ref} from "vue";
 
 onclick = (event) => {
   console.log(`${event.clientX}, ${event.clientY}`)
 };
-
-const overlay = ref<HTMLDivElement>()
-
-onMounted(() => {
-  console.log(overlay.value)
-  console.log(computedWidth)
-  console.log(computedHeight)
-
-})
-
-const computedWidth = computed(() => {
-  // return overlay.value ? overlay.value.clientWidth + 'px' : window.innerWidth
-  return window.innerWidth
-});
-
-const computedHeight = computed(() => {
-  // return overlay.value ? overlay.value?.offsetHeight + 'px' : window.innerHeight
-  return window.innerHeight
-});
-
-const imageGridArr = ['juliancamera.png', 'julianfairy.png', 'julianpants.png',
-  'le epic face.png', 'julianmatrix.png', 'julianface.png']
 
 const julianSrc = './src/assets/julian-stuff/'
 const assets = './src/assets/'
@@ -36,7 +12,7 @@ const assets = './src/assets/'
 </script>
 
 <template>
-  <div class="overlay" ref="overlay">
+  <StarFall class="overlay" background-color="#1a1a1a">
 
     <div id="imageColumnLeft">
       <Image :dir=assets filename="butterflies.gif"></Image>
@@ -64,7 +40,7 @@ const assets = './src/assets/'
         <Image id="fairy" :dir=julianSrc filename="julianfairy.png"></Image>
         <Image id="epic" :dir=julianSrc filename="le epic face.png"></Image>
         <Image id="camera" :dir=julianSrc filename="juliancamera.png"></Image>
-<!--        <Image id="face" :dir=julianSrc filename="julianface.png"></Image>-->
+        <!--        <Image id="face" :dir=julianSrc filename="julianface.png"></Image>-->
       </div>
 
       <div id="introText">
@@ -82,8 +58,7 @@ const assets = './src/assets/'
       <Image :dir=assets filename="cactus.gif"></Image>
     </div>
 
-    <StarFall :style="{ width: computedWidth, height: computedHeight }"></StarFall>
-  </div>
+  </StarFall>
 </template>
 
 <style scoped>
@@ -108,7 +83,6 @@ const assets = './src/assets/'
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-gap: 10px;
-  margin: 0;
   background: rgba(0, 0, 0, .75);
   width: 100vw;
   height: 100%;
