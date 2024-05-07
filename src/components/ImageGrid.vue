@@ -19,7 +19,7 @@
 
 #imageGrid img {
   max-width: 50%; /* Set maximum width to fill grid cell */
-  max-height: fit-content; /* Allow images to scale proportionally */
+  max-height: fit-content; /* Allow assets to scale proportionally */
 }
 </style>
 
@@ -42,8 +42,8 @@ function getAlt(name: string) {
 }
 
 function getImageStyle(index: number) {
-  const column = index % rows; // 3 images per row
-  const row = Math.floor(index / columns); // Calculate row based on 3 images per row
+  const column = index % rows; // 3 assets per row
+  const row = Math.floor(index / columns); // Calculate row based on 3 assets per row
 
   return {
     gridColumn: `${column + 1} / span ${column}`, // Set grid column and span

@@ -2,12 +2,20 @@
 import StarFall from "./components/starFall.vue";
 import Image from "./components/Image.vue";
 
-onclick = (event) => {
-  console.log(`${event.clientX}, ${event.clientY}`)
-};
+// onclick = (event) => {
+//   console.log(`${event.clientX}, ${event.clientY}`)
+// };
 
-const julianSrc = './src/assets/julian-stuff/'
-const assets = './src/assets/'
+function getImageURL(name: string, ext: string) {
+  return new URL(`./assets/home/${name}.${ext}`, import.meta.url).href
+}
+
+function getAssetURL(name: string, ext: string, dir?: string) {
+  return new URL(`./assets/${dir}${name}.${ext}`, import.meta.url).href
+}
+
+const home = "home"
+const julianSrc = "home/julian-stuff/"
 
 </script>
 
@@ -15,47 +23,41 @@ const assets = './src/assets/'
   <StarFall class="overlay" background-color="#1a1a1a">
 
     <div id="imageColumnLeft">
-      <Image :dir=assets filename="butterflies.gif"></Image>
-      <Image :dir=assets filename="gnome-toilet.gif"></Image>
-      <Image :dir=assets filename="apple.gif"></Image>
-      <Image :dir=assets filename="sharkie.gif"></Image>
+      <Image :path="getImageURL('butterflies', 'gif')"></Image>
+      <Image :path="getImageURL('gnome-toilet', 'gif')"></Image>
+      <Image :path="getImageURL('apple', 'gif')"></Image>
+      <Image :path="getImageURL('sharkie', 'gif')"></Image>
     </div>
 
     <div id="centerContent">
-      <img src="./assets/julian-stuff/julianlogo.gif" class="logo" alt="julian awesome website logo"/>
+      <Image class="logo" :path="getAssetURL('julianlogo', 'gif')" alt="julian awesome website logo"></Image>
       <h2>omg hello welcome to julian awesome epic website!!!!</h2>
 
       <p>hello dear visitor! this is an early version of my website!
         I plan on adding a lot more so you can fully immerse yourself in the julian experience!</p>
 
-
-      <!--      <ImageGrid dir="./src/assets/julian-stuff/" :images=imageGridArr>-->
-      <!--        -->
-
-      <!--      </ImageGrid>-->
-
       <div id="julianPics">
-        <Image id="matrix" :dir=julianSrc filename="julianmatrix.png"></Image>
-        <Image id="pants" :dir=julianSrc filename="julianpants.png"></Image>
-        <Image id="fairy" :dir=julianSrc filename="julianfairy.png"></Image>
-        <Image id="epic" :dir=julianSrc filename="le epic face.png"></Image>
-        <Image id="camera" :dir=julianSrc filename="juliancamera.png"></Image>
-        <!--        <Image id="face" :dir=julianSrc filename="julianface.png"></Image>-->
+        <Image id="matrix" :path="getAssetURL('julianmatrix', 'png', 'home/')"></Image>
+        <Image id="pants" :path="getAssetURL('julianpants', 'png', 'home/')"></Image>
+        <Image id="fairy" :path="getAssetURL('julianfairy', 'png', 'home/')"></Image>
+        <Image id="epic" :path="getAssetURL('le epic face', 'png', 'home/')"></Image>
+        <Image id="camera" :path="getAssetURL('juliancamera', 'png', 'home/')"></Image>
+        <!--        <Image id="face" :dir=julianSrc file="julianface.png"></Image>-->
       </div>
 
-      <div id="introText">
-        <h2 style="display: inline-block">hello i am
+<!--      <div id="introText">-->
+<!--        <h2 style="display: inline-block">hello i am-->
 
-          <Image :dir=julianSrc filename="julian shuster.gif" width="25%"></Image>
-        </h2>
+<!--          <Image :dir=julianSrc file="julian shuster.gif" width="25%"></Image>-->
+<!--        </h2>-->
 
-      </div>
+<!--      </div>-->
     </div>
     <div id="imageColumnRight">
-      <Image :dir=assets filename="flying-saucer.gif"></Image>
-      <Image :dir=assets filename="fish-graphic.gif"></Image>
-      <Image :dir=assets filename="lightbulb.gif"></Image>
-      <Image :dir=assets filename="cactus.gif"></Image>
+      <Image :path="getImageURL('flying-saucer', 'gif')"></Image>
+      <Image :path="getImageURL('fish-graphic', 'gif')"></Image>
+      <Image :path="getImageURL('lightbulb', 'gif')"></Image>
+      <Image :path="getImageURL('cactus', 'gif')"></Image>
     </div>
 
   </StarFall>
@@ -84,6 +86,8 @@ const assets = './src/assets/'
   grid-template-columns: auto 1fr auto;
   grid-gap: 10px;
   background: rgba(0, 0, 0, .75);
+  min-width: 100vw;
+  min-height: 100vh;
   width: 100vw;
   height: 100%;
 }
@@ -100,7 +104,7 @@ const assets = './src/assets/'
 }
 
 #julianPics img {
-  max-width: 75%; /* Ensures images fill their containers */
+  max-width: 75%; /* Ensures assets fill their containers */
   height: auto;
 }
 

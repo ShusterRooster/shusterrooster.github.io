@@ -7,10 +7,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
   overflow-x: hidden;
 }
 
 body {
+  background-color: #060606;
   margin: 0;
 }
 
